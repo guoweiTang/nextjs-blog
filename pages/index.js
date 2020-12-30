@@ -24,8 +24,9 @@ export default function Home({ allPostsData }) {
   return (
     <Layout home>
       {/* Keep the existing code here */}
+      <a href="https://itunes.apple.com/cn/app/id477927812" id="openApp">贴吧客户端</a><br/>
       <a href='bdapp://map/navi?location=40.057023,116.307852&coord_type=bd09ll&src=andr.baidu.openAPIdemo&viaPoints={"viaPoints":[{"name":"日坛公园","lat":39.9213420718041,"lng":116.45043700279867},{"name":"天坛公园","lat":39.8882429566928,"lng":116.41724596166326},{"name":"北京西站","lat":39.90083463437583,"lng":116.32810279404168}]}'>android驾车导航</a><br/>
-      <a href='baidumap://map/navi?location=40.057023,116.307852&coord_type=bd09ll&src=ios.baidu.openAPIdemo&viaPoints={"viaPoints":[{"name":"日坛公园","lat":39.9213420718041,"lng":116.45043700279867},{"name":"天坛公园","lat":39.8882429566928,"lng":116.41724596166326},{"name":"北京西站","lat":39.90083463437583,"lng":116.32810279404168}]}'>ios驾车导航</a>
+      <a href='baidumap://map/navi?location=40.07436955334694,116.25060826587547&coord_type=bd09ll&src=ios.baidu.openAPIdemo&viaPoints={"viaPoints":[{"name":"日坛公园","lat":40.07428103530233,"lng":116.24946238791905},{"name":"天坛公园","lat":40.0736692358509,"lng":116.24976639479523},{"name":"北京西站","lat":40.07416115611646,"lng":116.25008385330311},{"name":"中海","lat":40.07456006361807,"lng":116.2498713175224}]}'>ios驾车导航</a>
       {/* Add this <section> tag below the existing <section> tag */}
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
