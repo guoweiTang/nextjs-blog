@@ -24,7 +24,7 @@ export default function Home({ allPostsData }) {
   return (
     <Layout home>
       {/* Keep the existing code here */}
-      <a href="baidumap://map/direction?origin=34.264642646862,108.95108518068&destination=39.90083463437583,116.32810279404168&coord_type=bd09ll&mode=driving&src=ios.baidu.openAPIdemo&viaPoints=%5Bobject%20Object%5D%2C%5Bobject%20Object%5D%2C%5Bobject%20Object%5D">路线规划</a>
+      <a href="baidumap://map/direction?origin=40.09041840732878,116.24387479484852&destination=39.90083463437583,116.32810279404168&coord_type=bd09ll&mode=driving&src=ios.baidu.openAPIdemo&viaPoints=%5Bobject%20Object%5D%2C%5Bobject%20Object%5D%2C%5Bobject%20Object%5D">路线规划</a>
       <a href="baidumap://map/navi?location=39.90083463437583,116.32810279404168&coord_type=bd09ll&type=BLK&src=ios.baidu.openAPIdemo&viaPoints=%5Bobject%20Object%5D%2C%5Bobject%20Object%5D%2C%5Bobject%20Object%5D">驾车导航</a>
       {/* Add this <section> tag below the existing <section> tag */}
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
