@@ -50,3 +50,19 @@
 .lightText {
   color: #999;
 }
+
+.beDrawing {
+  background-position-y: -52px!important;
+}
+
+.noDrawing {
+  background-position-y: 0!important;
+}
+
+.ok {
+  background: #1890ff;
+  line-height: 47px;
+  width: 100px;
+  color: #fff;
+  text-align: center;
+}

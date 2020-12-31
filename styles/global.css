@@ -25,3 +25,37 @@ img {
   max-width: 100%;
   display: block;
 }
+
+ul li {
+  list-style: none;
+}
+
+#map {
+  width: 100vw;
+  height: 100vh;
+}
+
+.drawing-panel {
+  z-index: 999;
+  position: fixed;
+  bottom: 3.5rem;
+  margin-left: 2.5rem;
+  padding-left: 0;
+  border-radius: .25rem;
+  height: 47px;
+  box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+}
+.bmap-btn {
+  border-right: 1px solid #d2d2d2;
+  float: left;
+  width: 64px;
+  height: 100%;
+  background-image: url(//api.map.baidu.com/library/DrawingManager/1.4/src/bg_drawing_tool.png);
+  cursor: pointer;
+}
+.drawing-panel .bmap-marker {
+  background-position: -65px 0;
+}
+.drawing-panel .bmap-polyline {
+  background-position: -195px 0;
+}
