@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import qs from 'qs'
 
 export async function getServerSideProps({query}) {
@@ -9,9 +9,13 @@ export async function getServerSideProps({query}) {
   }
 }
 export default function Home({ zoom, center, marks, lines }) {
+  const [map, setMap] = useState();
   useEffect(() => {
-    // 百度地图API功能
-    const map = new BMap.Map("map");    // 创建Map实例
+    console.log('effect map');
+    setMap(new BMap.Map('map'));          // 创建Map实例
+  },[])
+  useEffect(() => {
+    if (!map) return;
     map.centerAndZoom(new BMap.Point(center.lng, center.lat), zoom);  // 初始化地图,设置中心点坐标和地图级别
     map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
     const sy = new BMap.Symbol(BMap_Symbol_SHAPE_BACKWARD_OPEN_ARROW, {
@@ -52,7 +56,8 @@ export default function Home({ zoom, center, marks, lines }) {
       map.addOverlay(marker);
       marker.setLabel(label);
     })
-
+  }, [map])
+  const getGeo = () => {
     // 获取当前位置
     const geo = new BMap.Geolocation();
     geo.getCurrentPosition(res => {
@@ -68,18 +73,23 @@ export default function Home({ zoom, center, marks, lines }) {
         map.panTo(res.point);
       }
       else {
-        alert('failed'+this.getStatus());
+        alert('failed' + geo.getStatus());
       } 
-      console.log(res)
     })
-    console.log(geo.getStatus())
-  }, [])
+  }
   return (
     <div>
       <Head>
         <title>会展路线</title>
         <script src="//api.map.baidu.com/api?v=2.0&ak=pXBmbUqLB315LaGvtYqpjK4hoGuDPHeK"></script>
       </Head>
+      <ul className="info">
+        {marks && marks.map((item, i) => (
+          <li key={i}><a href={`baidumap://map/navi?location=${item.lat},${item.lng}&coord_type=bd09ll&type=BLK&src=ios.baidu.openAPIdemo`}>导航至集合点{i + 1}</a></li>
+        ))}
+        <li><a href={`baidumap://map/navi?location=${lines.slice(-1)[0].lat},${lines.slice(-1)[0].lng}&coord_type=bd09ll&type=BLK&src=ios.baidu.openAPIdemo`}>导航至终点</a></li>
+      </ul>
+      <div className="geo" onClick={getGeo}><svg t="1609756234094" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2099" width="32" height="32"><path d="M1022.944 533.184a511.2 511.2 0 0 1-489.6 489.6 15.744 15.744 0 0 1-5.344 1.088h-32a15.744 15.744 0 0 1-5.344-1.088 511.2 511.2 0 0 1-489.6-489.6A15.744 15.744 0 0 1 0 528v-32a15.392 15.392 0 0 1 1.056-5.152A511.2 511.2 0 0 1 490.656 1.088 15.744 15.744 0 0 1 496 0h32a15.744 15.744 0 0 1 5.344 1.088 511.2 511.2 0 0 1 489.6 489.76 15.392 15.392 0 0 1 1.056 5.152v32a15.744 15.744 0 0 1-1.056 5.184zM544 65.6V272a16 16 0 0 1-16 16h-32a16 16 0 0 1-16-16V65.6A447.552 447.552 0 0 0 65.536 480H272a16 16 0 0 1 16 16v32a16 16 0 0 1-16 16H65.536A447.552 447.552 0 0 0 480 958.4V752a16 16 0 0 1 16-16h32a16 16 0 0 1 16 16v206.4A447.552 447.552 0 0 0 958.464 544H752a16 16 0 0 1-16-16v-32a16 16 0 0 1 16-16h206.464A447.552 447.552 0 0 0 544 65.6z" p-id="2100" fill="#1196db"></path></svg></div>
       <div id="map"></div>
     </div>
   )
