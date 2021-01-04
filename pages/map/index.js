@@ -6,14 +6,21 @@ import qs from 'qs'
 
 let marksTemp = [];
 export default function Map() {
+  const [map, setMap] = useState();
   const [drawingManager, setDrawingManager] = useState();
   const [active, setActive] = useState(0);
   const [marks, setMarks] = useState([]);
   const [lines, setLines] = useState([]);
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    console.log('effect');
-    const map = new BMapGL.Map('map', {enableMapClick:false}); // 创建Map实例,GL版命名空间为BMapGL(鼠标右键控制倾斜角度)
+    console.log('effect map');
+    setMap(new BMapGL.Map('map', {enableMapClick:false}));          // 创建Map实例,GL版命名空间为BMapGL(鼠标右键控制倾斜角度)
+  },[])
+
+  useEffect(() => {
+    if (!map) return;
+    console.log('effect map instantiate');
     map.centerAndZoom(new BMapGL.Point(116.404, 39.915), 11);      // 初始化地图,设置中心点坐标和地图级别
     map.enableScrollWheelZoom(true);                               // 开启鼠标滚轮缩放
 
@@ -33,16 +40,19 @@ export default function Map() {
       sorptiondistance: 20,   // 边界吸附距离
       polylineOptions: styleOptions,   // 线的样式
     }));
-  },[])
+  }, [map])
 
   useEffect(() => {
     if(!drawingManager) return;
+    console.log('effect map event');
     drawingManager.addEventListener("markercomplete", function(e) {
-      marksTemp.push(JSON.stringify({lat: e.latLng.lat, lng: e.latLng.lng}));
+      marksTemp.push({lat: e.latLng.lat, lng: e.latLng.lng});
       setMarks([...marksTemp]);
     });
     drawingManager.addEventListener('polylinecomplete', function(e, overlay) {
-      setLines(e.points.map(item => (JSON.stringify(item.latLng))))
+      setLines(e.points.map(item => (item.latLng)));
+      setIsComplete(true);
+      setActive(-1);
     });
   }, [drawingManager])
   
@@ -55,6 +65,13 @@ export default function Map() {
             break;
         }
         case 'polyline': {
+            if (isComplete){
+              const refresh = window.confirm('仅允许绘制一条路线，是否重新绘制？');
+              if (refresh) {
+                window.location.reload();
+              }
+              return;
+            }
             var drawingType = BMAP_DRAWING_POLYLINE;
             setActive(active === 1 ? -1 : 1);
             break;
@@ -69,7 +86,13 @@ export default function Map() {
     }
   };
   const openNewWindow = () => {
-    location.href = `/map/drive?${qs.stringify({marks, lines})}`
+    console.log(0)
+    if (!isComplete) return;
+    console.log(map.getZoom())
+    console.log(map.getCenter())
+    const zoom = map.getZoom();
+    const center = map.getCenter();
+    location.href = `/map/drive?${qs.stringify({marks, lines, zoom, center})}`
   }
   return (
     <div>
@@ -82,7 +105,7 @@ export default function Map() {
       <ul className="drawing-panel">
         <li className={`bmap-btn bmap-marker ${active === 0 ? utilStyles.beDrawing : utilStyles.noDrawing}`} id="marker" onClick={draw}></li>
         <li className={`bmap-btn bmap-polyline ${active === 1 ? utilStyles.beDrawing : utilStyles.noDrawing}`} id="polyline" onClick={draw}></li>
-        <li className={`bmap-btn ${utilStyles.ok}`} onClick={openNewWindow}>
+        <li className={`bmap-btn ${utilStyles.btn} ${isComplete ? utilStyles.ok : utilStyles.no}`} onClick={openNewWindow}>
           生成路线
         </li>
       </ul>

@@ -59,3 +59,5 @@ ul li {
 .drawing-panel .bmap-polyline {
   background-position: -195px 0;
 }
+
+#l-map{height:500px;width:100%;}
