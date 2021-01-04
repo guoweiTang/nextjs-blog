@@ -71,11 +71,11 @@ ul li {
   left: 1vw;
   background-color: #fff;
   box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
-  border-radius: 2vw;
+  border-radius: 5px;
 }
 
 .info {
-  padding: 3vw;
+  padding: 8px;
   top: 1vw;
   font-size: 14px;
   color: #666;
