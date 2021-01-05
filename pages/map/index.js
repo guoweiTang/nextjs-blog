@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import { useEffect, useState } from 'react';
 import utilStyles from '../../styles/utils.module.css'
 import qs from 'qs'
