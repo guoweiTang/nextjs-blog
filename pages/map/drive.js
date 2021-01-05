@@ -99,9 +99,9 @@ export default function Home({ zoom, center, marks, lines }) {
         ) : (
           <>
           {marks && marks.map((item, i) => (
-            <li key={i}><a href={`bdapp://map/navi?location=${item.lat},${item.lng}&coord_type=bd09ll&type=BLK&src=ios.baidu.openAPIdemo`}>导航至集合点{i + 1}</a></li>
+            <li key={i}><a href={`baidumap://map/navi?location=${item.lat},${item.lng}&coord_type=bd09ll&type=BLK&src=ios.baidu.openAPIdemo`}>导航至集合点{i + 1}</a></li>
           ))}
-            <li><a href={`bdapp://map/navi?location=${lines.slice(-1)[0].lat},${lines.slice(-1)[0].lng}&coord_type=bd09ll&type=BLK&src=ios.baidu.openAPIdemo`}>导航至终点</a></li>
+            <li><a href={`baidumap://map/navi?location=${lines.slice(-1)[0].lat},${lines.slice(-1)[0].lng}&coord_type=bd09ll&type=BLK&src=ios.baidu.openAPIdemo`}>导航至终点</a></li>
           </>
         )}
       </ul>
