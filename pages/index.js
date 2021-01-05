@@ -29,6 +29,7 @@ export default function Home({ allPostsData }) {
     })();
     alert('isMobile:' + isMobile)
     alert('isIos:' + isIos)
+    alert('userAgent:' + navigator.userAgent)
   }, [])
   return (
     <Layout home>
